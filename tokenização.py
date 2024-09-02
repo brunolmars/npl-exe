@@ -15,8 +15,11 @@ def tokenization(n):
     token = word_tokenize(text)
 
     assert n <= len(token)
-    sent = word_tokenize(text.lower())
-    sents = stopwords(sent)
+    
+    sent = [token.lower() for token in token]
+    stop_words = set(stopwords.words('english') + list(punctuation))
 
-    print(sents)
+    filtoken =[token for token in sent if token not in stop_words]
+
+    
 
