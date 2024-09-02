@@ -9,12 +9,14 @@ from collections import defaultdict
 ranking = defaultdict
 
 
-def tokenization():
+def tokenization(n):
 
     text =  """France, in Western Europe, encompasses medieval cities, alpine villages and Mediterranean beaches. Paris, its capital, is famed for its fashion houses, classical art museums including the Louvre and monuments like the Eiffel Tower. The country is also renowned for its wines and sophisticated cuisine. Lascaux’s ancient cave drawings, Lyon’s Roman theater and the vast Palace of Versailles attest to its rich history."""
     token = word_tokenize(text)
 
     assert n <= len(token)
     sent = word_tokenize(text.lower())
-    sents = stopwords(sent) 
+    sents = stopwords(sent)
+
+    print(sents)
 
