@@ -3,6 +3,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 from string import punctuation
+from sklearn.feature_extraction.text import CountVectorizer
 from collections import defaultdict
 import pandas as pd
 
@@ -34,8 +35,18 @@ def tokenization(n):
     stemming = PorterStemmer()
     token_stemming = [stemming.stem(token) for token in token_lemmatizer]
 
-    print(token_stemming)
+    vectorize = CountVectorizer()
+    token_vector = vectorize.transform(token_stemming)
 
+    print(token_vector.shape)
+    print(token_vector.toarray())
+    
+
+
+
+    
+
+ 
 
 
 
