@@ -1,10 +1,13 @@
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.stem import PorterStemmer
 from string import punctuation
 from collections import defaultdict
 import pandas as pd
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
+
+
+
 
 ranking = defaultdict(int)
 
@@ -25,15 +28,22 @@ def tokenization(n):
     
     filtered_tokens = [token for token in tokens_lower if token not in stop_words]
 
-    plt.rcParams['figure.figsize'] = (20, 8)
-        
-    word_cloud = " ".join(filtered_tokens)
-    wordcloud = WordCloud(width=1000, height=500, background_color='white', min_font_size=10).generate(word_cloud)
+    lemetizer = WordNetLemmatizer()
+    token_lemmatizer = [lemetizer.lemmatize(token) for token in filtered_tokens ]
+
+    stemming = PorterStemmer()
+    token_stemming = [stemming.stem(token) for token in token_lemmatizer]
+
+    print(token_stemming)
+
+
+
+
+
     
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
-    plt.show()
 
 
-tokenization(100)
-
+    
+  
+    
+    
