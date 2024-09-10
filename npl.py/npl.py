@@ -3,6 +3,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.wsd import lesk
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
 from string import punctuation
 from sklearn.feature_extraction.text import CountVectorizer
 import pandas as pd
@@ -38,6 +40,28 @@ nlp = spacy.load("en_core_web_sm")
 token_sent2 =nlp("".join(token_list[0]))
 for token in token_sent2:
     print("{0}".format(token.head.text))
+
+rf = RandomForestClassifier()
+
+
+parameters = {'max_features': ('auto','sqrt'),
+             'n_estimators': [500, 1000, 1500],
+             'max_depth': [5, 10, None],
+             'min_samples_split': [5, 10, 15],
+             'min_samples_leaf': [1, 2, 5, 10],
+             'bootstrap': [True, False]}
+
+search = GridSearchCV(rf,parameters,cv=5,scoring='accuracy')
+
+search.fit(token_vector)
+print(search.best_params_)
+
+
+
+
+
+
+
 
 
 
