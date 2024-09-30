@@ -40,20 +40,8 @@ def palavras_enumeradas(token_list):
 
     return token_list
 
-
-
-token_process = text_trasformeted(token_list)
-print(token_list)
-
 coutvectorize = CountVectorizer()
-token_vector = coutvectorize.fit_transform(token_process)
-
-
-w2v = Word2Vec(sentences= token_list, min_count= 1)
-
-
 token_sent = lesk(token_process[0],"paris")
-
 nlp = spacy.load("en_core_web_sm")
 token_sent2 =nlp("".join(token_list[0]))
 for token in token_sent2:
@@ -68,8 +56,25 @@ parameters = {'max_features': ('auto','sqrt'),
 
 search = GridSearchCV(RandomForestClassifier(),parameters,cv=5,scoring='accuracy')
 
-search.fit(token_vector)
-print(search.best_params_)
+token_process = text_trasformeted(token_list)
+print(token_list)
+
+token_enumereted = palavras_enumeradas(token_list)
+print(token_enumereted)
+
+token_vectorize = coutvectorize.fit_transform(token_process)
+
+token_vectorize2 = coutvectorize.transform(token_vectorize)
+
+rfc = RandomForestClassifier(max_features=search.best_params_['max_features'],                                  max_depth=search.best_params_['max_depth'],
+                                  n_estimators=search.best_params_['n_estimators'],                                      min_samples_split=search.best_params_['min_samples_split'],                                    min_samples_leaf=search.best_params_['min_samples_leaf'],
+                                    bootstrap=search.best_params_['bootstrap'])
+rfc.fit(token_vectorize2)
+
+prediction = rfc.predict(token_vectorize2)
+
+
+
 
 
 
